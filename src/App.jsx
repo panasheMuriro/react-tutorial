@@ -1,50 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Banner from "./components/Banner";
 import CourseList from "./components/CourseList";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const App = () => {
+  const [scheduleTitle, setScheduleTitle] = useState("");
+  const [courseData, setCourseData] = useState([]);
 
-  const schedule = {
-    "title": "CS Courses for 2018-2019",
-    "courses": {
-      "F101" : {
-        "term": "Fall",
-        "number": "101",
-        "meets" : "MWF 11:00-11:50",
-        "title" : "Computer Science: Concepts, Philosophy, and Connections"
-      },
-      "F110" : {
-        "term": "Fall",
-        "number": "110",
-        "meets" : "MWF 10:00-10:50",
-        "title" : "Intro Programming for non-majors"
-      },
-      "S313" : {
-        "term": "Spring",
-        "number": "313",
-        "meets" : "TuTh 15:30-16:50",
-        "title" : "Tangible Interaction Design and Learning"
-      },
-      "S314" : {
-        "term": "Spring",
-        "number": "314",
-        "meets" : "TuTh 9:30-10:50",
-        "title" : "Tech & Human Interaction"
-      }
-    }
+  const getCompleteData = async () => {
+    let res = await fetch(
+      "https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php"
+    );
+    let data = await res.json();
+    return data;
   };
 
-  let courseList = Object.values(schedule.courses);
-     
+  useEffect(() => {
+    getCompleteData().then((data) => {
+      setCourseData(Object.values(data.courses));
+      setScheduleTitle(data.title);
+    });
+  }, []);
 
   return (
     <div className="App">
-     <Banner title={schedule.title}/>
-     <CourseList courseList={courseList}/>
+      <Banner title={scheduleTitle} />
+      <CourseList courseList={courseData} />
     </div>
   );
 };
