@@ -5,6 +5,7 @@ import Banner from "./components/Banner";
 import CourseList from "./components/CourseList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import TermPage from "./components/TermPage";
 
 const App = () => {
   const [scheduleTitle, setScheduleTitle] = useState("");
@@ -28,7 +29,7 @@ const App = () => {
   return (
     <div className="App">
       <Banner title={scheduleTitle} />
-      <CourseList courseList={courseData} />
+      <TermPage courseList={courseData}/>
     </div>
   );
 };
