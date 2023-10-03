@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { CourseCard } from "./CourseCard";
 import CourseList from "./CourseList";
+import Modal from "./Modal";
 
 const terms = {
   Fall: "Fall",
@@ -27,7 +29,7 @@ const TermButton = ({ term, selection, setSelection }) => {
 
 const TermSelector = ({ selection, setSelection }) => (
   <div className="btn-group">
-    {Object.keys(terms).map((term,) => (
+    {Object.keys(terms).map((term) => (
       <TermButton
         key={term}
         term={term}
@@ -38,7 +40,7 @@ const TermSelector = ({ selection, setSelection }) => (
   </div>
 );
 
-export default function TermPage({ courseList }) {
+export default function TermPage({ courseList, selectedCourseList }) {
   const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
   const [filteredCourseList, setFilteredCourseList] = useState(courseList);
 
@@ -48,12 +50,27 @@ export default function TermPage({ courseList }) {
       courseList.filter((course) => course.term == selection)
     );
   }, [selection, courseList]);
-  
+
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedClasses, setSelectedClasses] = useState([]);
 
   return (
     <div>
       <TermSelector selection={selection} setSelection={setSelection} />
-      <CourseList courseList={filteredCourseList}  />
+   
+      <button className="btn btn-success mb-1 p-2" style={{marginLeft: 100}} onClick={()=> setOpenModal(true)}>My courses</button>
+      <Modal open={openModal} close={()=>setOpenModal(false)}>
+      {selectedClasses.map((x, index) => (
+        <CourseCard
+          course={x}
+          key={index}
+          onClick={() => {}}
+          selected={selectedClasses.includes(x)}
+        />
+      ))}
+        
+      </Modal>
+      <CourseList courseList={filteredCourseList} getSelectedClasses={(classes)=>setSelectedClasses(classes)} />
     </div>
   );
 }

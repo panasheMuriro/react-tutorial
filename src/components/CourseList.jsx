@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { CourseCard } from "./CourseCard";
 import "./CourseList.css";
 
-export default function CourseList({ courseList }) {
+export default function CourseList({ courseList, getSelectedClasses }) {
   // filter with 3
   const [selectedClasses, setSelectedClasses] = useState([]);
 
@@ -17,6 +17,10 @@ export default function CourseList({ courseList }) {
       setSelectedClasses([...selectedClasses, item]);
     }
   };
+
+  useEffect(() => {
+    getSelectedClasses(selectedClasses);
+  }, [selectedClasses]);
 
   return (
     <div className="course-list">
