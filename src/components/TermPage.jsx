@@ -48,11 +48,12 @@ export default function TermPage({ courseList }) {
       courseList.filter((course) => course.term == selection)
     );
   }, [selection, courseList]);
+  
 
   return (
     <div>
       <TermSelector selection={selection} setSelection={setSelection} />
-      <CourseList courseList={filteredCourseList} />
+      <CourseList courseList={filteredCourseList}  />
     </div>
   );
 }

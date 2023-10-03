@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { CourseCard } from "./CourseCard";
-import './CourseList.css'
+import "./CourseList.css";
 
 export default function CourseList({ courseList }) {
+  // filter with 3
+  const [selectedClasses, setSelectedClasses] = useState([]);
 
-  // filter with 3 buttons
+  const toggleSelected = (item) => {
+    // Check if the item is already in selectedClasses
+    if (selectedClasses.includes(item)) {
+      // If it's already selected, remove it
+      setSelectedClasses(selectedClasses.filter((course) => course !== item));
+    } else {
+      // If it's not selected, add it
+      setSelectedClasses([...selectedClasses, item]);
+    }
+  };
+
   return (
     <div className="course-list">
       {courseList.map((x, index) => (
-        // <p>{x.term} CS {x.number}: {x.title}</p>
-        <CourseCard course={x} key={index}/>
+        <CourseCard
+          course={x}
+          key={index}
+          onClick={() => toggleSelected(x)}
+          selected={selectedClasses.includes(x)}
+        />
       ))}
     </div>
   );
