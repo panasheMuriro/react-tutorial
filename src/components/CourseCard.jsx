@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 
-export const CourseCard = ({ course, onClick, selected }) => {
+export const CourseCard = ({ course, onClick, selected, clashes }) => {
   useEffect(() => {
     console.log(selected);
   }, [selected]);
@@ -21,6 +21,7 @@ export const CourseCard = ({ course, onClick, selected }) => {
           <div className="card-footer bg-white">
             <p className="card-text">{course.meets}</p>
           </div>
+        {clashes &&  <p className="card-text" style={{color: "red"}}>cannot add</p>}
         </div>
       </div>
     </>
