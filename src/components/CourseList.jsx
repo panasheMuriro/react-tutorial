@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { hasClash } from "../utils/hasClash";
 import { isCourseSelected } from "../utils/isCourseSelected";
