@@ -1,7 +1,20 @@
-import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Banner({title}) {
+export default function Banner({ title }) {
+
+
   return (
-    <h1>{title}</h1>
+    <div>
+      <h1>{title}</h1>
+
+      <Link
+        to={{
+          pathname: "/course_form",
+        }}
+      >
+        {" "}
+        <button>Course Form</button>
+      </Link>
+    </div>
   );
 }

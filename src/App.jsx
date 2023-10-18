@@ -7,6 +7,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import TermPage from "./components/TermPage";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CourseForm } from "./components/CourseForm";
+
 const App = () => {
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [courseData, setCourseData] = useState([]);
@@ -27,10 +30,16 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <Banner title={scheduleTitle} />
-      <TermPage courseList={courseData}/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Banner title={scheduleTitle} />
+
+        <Routes>
+          <Route path="/" element={<TermPage courseList={courseData} />} />
+          <Route path="/course_form" element={<CourseForm />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 
