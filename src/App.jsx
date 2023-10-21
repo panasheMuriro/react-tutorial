@@ -9,25 +9,28 @@ import TermPage from "./components/TermPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CourseForm } from "./components/CourseForm";
+import { useDbData, useDbUpdate } from "./utils/firebase";
 
 const App = () => {
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [courseData, setCourseData] = useState([]);
 
-  const getCompleteData = async () => {
-    let res = await fetch(
-      "https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php"
-    );
-    let data = await res.json();
-    return data;
-  };
+
+  const [title, error1] = useDbData('/title')
+  const [courses, error2] = useDbData('/courses')
 
   useEffect(() => {
-    getCompleteData().then((data) => {
-      setCourseData(Object.values(data.courses));
-      setScheduleTitle(data.title);
-    });
-  }, []);
+      if(title){
+        setScheduleTitle(title);
+      }
+
+      if (courses){
+        setCourseData(Object.values(courses));
+      }
+     
+    // });
+  }, [title, courses]);
+
 
   return (
     <BrowserRouter>
