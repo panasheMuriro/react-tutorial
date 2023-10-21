@@ -15,7 +15,6 @@ const App = () => {
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [courseData, setCourseData] = useState([]);
 
-
   const [title, error1] = useDbData('/title')
   const [courses, error2] = useDbData('/courses')
 

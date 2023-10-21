@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useDbData, useDbUpdate } from "../utils/firebase";
 
 export const CourseForm = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const data = JSON.parse(queryParams.get("data"));
 
+  const [course, error]  = useDbData(`/courses/${data.id}`)
+  const [modifyCourse, result]  = useDbUpdate(`/courses/${data.id}`)
+  
+  
   const [title, setTitle] = useState(data.title);
   const [meetingTimes, setMeetingTimes] = useState(data.meeting_times);
   const [raiseTitleError, setRaiseTitleError] = useState(false);
@@ -14,14 +19,22 @@ export const CourseForm = () => {
 
   const validate = (e) => {
     e.preventDefault();
-    console.log(title, meetingTimes);
 
-    if (title.length < 2) {
-      setRaiseTitleError(true);
-    } else {
-      setRaiseTitleError(false);
+    setRaiseTitleError(!isTitleValid(title))
+    setRaiseMeetingError(!isMeetingTimesValid(meetingTimes));
+
+    if (isTitleValid(title) && isMeetingTimesValid(meetingTimes)){
+      modifyCourse({...course, title: title, meets: meetingTimes})
     }
+  };
 
+
+  const isTitleValid = (title)=> {
+   console.log(!(title.length < 2))
+      return !(title.length < 2)
+  }
+
+  const isMeetingTimesValid = (meetingTimes)=> {
     if (meetingTimes == "") {
       setRaiseMeetingError(false);
     } else if (
@@ -32,11 +45,14 @@ export const CourseForm = () => {
       ) ||
       !meetingTimes.split(" ")[1].match(/^(\d{1,2}:\d{2})-(\d{1,2}:\d{2})$/)
     ) {
-      setRaiseMeetingError(true);
+      return false
     } else {
-      setRaiseMeetingError(false);
+      return true
     }
-  };
+
+  }
+
+
   return (
     <form
       style={{

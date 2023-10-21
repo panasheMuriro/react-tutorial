@@ -30,7 +30,7 @@ export const CourseCard = ({ course, onClick, selected, clashes }) => {
               {selected?"Remove": "Add"}
             </button>
 
-            <Link to={`/course_form?data=${JSON.stringify({title:course.title, meeting_times: course.meets})}`}>
+            <Link to={`/course_form?data=${JSON.stringify({id: course.term[0]+course.number, title:course.title, meeting_times: course.meets})}`}>
            
             <button className="btn btn-secondary">Edit</button>
             </Link>
