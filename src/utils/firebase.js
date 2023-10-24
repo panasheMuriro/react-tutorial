@@ -8,6 +8,16 @@ import {
     connectDatabaseEmulator,
   } from "firebase/database";
 import { useCallback, useEffect, useState } from "react";
+import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut,
+    connectAuthEmulator,
+    signInWithCredential,
+    signInWithRedirect,
+    onAuthStateChanged,
+  } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,7 +33,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+const auth = getAuth(app);
 const database = getDatabase(app);
 
 export const useDbData = (path) => {
@@ -69,3 +79,22 @@ const makeResult = (error) => {
   return { timestamp, error, message };
 };
 
+
+export const signInWithGoogle = () => {
+    signInWithPopup(auth, new GoogleAuthProvider());
+  };
+  
+  const firebaseSignOut = () => signOut(auth);
+  
+  export { firebaseSignOut as signOut };
+  
+  export const useAuthState = () => {
+    const [user, setUser] = useState();
+    
+    useEffect(() => (
+      onAuthStateChanged(auth, setUser)
+    ), []);
+  
+    return [user];
+  };
+  
