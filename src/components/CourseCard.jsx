@@ -1,15 +1,12 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "../utils/firebase";
+import { useProfile } from "../utils/profile";
 
 export const CourseCard = ({ course, onClick, selected, clashes }) => {
   const [user] = useAuthState();
-  
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
 
-
+  const [profile, profileLoading, profileError] = useProfile();
 
   return (
     <>
@@ -37,7 +34,7 @@ export const CourseCard = ({ course, onClick, selected, clashes }) => {
 
             <Link to={`/course_form?data=${JSON.stringify({id: course.term[0]+course.number, title:course.title, meeting_times: course.meets})}`}>
            
-           {user &&  <button className="btn btn-secondary">Edit</button>}
+           {profile?.isAdmin &&  <button className="btn btn-secondary">Edit</button>}
             </Link>
           </div>
         </div>
