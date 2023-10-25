@@ -12,6 +12,7 @@ export const CourseCard = ({ course, onClick, selected, clashes }) => {
     <>
       <div
         className="card m-1 p-2"
+        data-cy="course"
         style={{ backgroundColor: selected ? "orange" : "white" }}
       >
         <div className="card-body">
@@ -27,14 +28,21 @@ export const CourseCard = ({ course, onClick, selected, clashes }) => {
               cannot add
             </p>
           )}
-          <div style={{display: "flex", justifyContent: "center", gap:5}}>
+          <div style={{ display: "flex", justifyContent: "center", gap: 5 }}>
             <button onClick={onClick} className="btn btn-success">
-              {selected?"Remove": "Add"}
+              {selected ? "Remove" : "Add"}
             </button>
 
-            <Link to={`/course_form?data=${JSON.stringify({id: course.term[0]+course.number, title:course.title, meeting_times: course.meets})}`}>
-           
-           {profile?.isAdmin &&  <button className="btn btn-secondary">Edit</button>}
+            <Link
+              to={`/course_form?data=${JSON.stringify({
+                id: course.term[0] + course.number,
+                title: course.title,
+                meeting_times: course.meets,
+              })}`}
+            >
+              {profile?.isAdmin && (
+                <button className="btn btn-secondary">Edit</button>
+              )}
             </Link>
           </div>
         </div>
