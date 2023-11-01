@@ -5,14 +5,15 @@ import Modal from "./Modal";
 
 const terms = {
   Fall: "Fall",
-  Winter: "Winder",
+  Winter: "Winter",
   Spring: "Spring",
 };
 
 const TermButton = ({ term, selection, setSelection }) => {
   return (
-    <div>
+    <div data-cy={term}>
       <input
+      
         type="radio"
         id={term}
         className="btn-check"
@@ -28,9 +29,10 @@ const TermButton = ({ term, selection, setSelection }) => {
 };
 
 const TermSelector = ({ selection, setSelection }) => (
-  <div className="btn-group">
+  <div className="btn-group" >
     {Object.keys(terms).map((term) => (
       <TermButton
+      
         key={term}
         term={term}
         selection={selection}

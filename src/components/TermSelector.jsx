@@ -3,13 +3,14 @@ import React from "react";
 export const TermSelector = ({ term, selection, setSelection }) => {
   const terms = {
     Fall: "Fall",
-    Winter: "Winder",
+    Winter: "Winter",
     Spring: "Spring",
   };
 
   return (
     <div>
       <input
+        data-cy={term}
         type="radio"
         id={term}
         className="btn-check"
