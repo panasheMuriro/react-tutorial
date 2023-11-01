@@ -36,6 +36,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
+if (!globalThis.EMULATION && import.meta.env.MODE === 'development') {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+signInWithCredential(auth, GoogleAuthProvider.credential(
+  '{"sub": "wmql9kKOdSWAu5skk2okSBYzyT82", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+));
+
+// set flag to avoid connecting twice, e.g., because of an editor hot-reload
+globalThis.EMULATION = true;
+}
+
+
+
 export const useDbData = (path) => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
