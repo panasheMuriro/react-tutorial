@@ -26,6 +26,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAtA2416KPgimj-kMITF7NXXR9GaZSRpbU",
   authDomain: "react-tutorial-1b946.firebaseapp.com",
   projectId: "react-tutorial-1b946",
+  databaseURL: "http://127.0.0.1:9000/?ns=react-tutorial-2023",
   storageBucket: "react-tutorial-1b946.appspot.com",
   messagingSenderId: "194434498584",
   appId: "1:194434498584:web:2d90ab2831542029b4036d"
@@ -41,7 +42,7 @@ if (!globalThis.EMULATION && import.meta.env.MODE === 'development') {
   connectDatabaseEmulator(database, "127.0.0.1", 9000);
 
 signInWithCredential(auth, GoogleAuthProvider.credential(
-  '{"sub": "wmql9kKOdSWAu5skk2okSBYzyT82", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+  '{"sub": "i0RiXDLIWCwF8OIC4LVtB9AOz0qi", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
 ));
 
 // set flag to avoid connecting twice, e.g., because of an editor hot-reload
