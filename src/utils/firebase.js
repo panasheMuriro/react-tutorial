@@ -26,7 +26,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAtA2416KPgimj-kMITF7NXXR9GaZSRpbU",
   authDomain: "react-tutorial-1b946.firebaseapp.com",
   projectId: "react-tutorial-1b946",
-  databaseURL: "http://127.0.0.1:9000/?ns=react-tutorial-2023",
+  databaseURL: import.meta.env.PROD ? "https://react-tutorial-1b946-default-rtdb.firebaseio.com": "http://127.0.0.1:9000/?ns=react-tutorial-2023",
   storageBucket: "react-tutorial-1b946.appspot.com",
   messagingSenderId: "194434498584",
   appId: "1:194434498584:web:2d90ab2831542029b4036d"
@@ -37,7 +37,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-if (!globalThis.EMULATION && import.meta.env.MODE === 'development') {
+if (!globalThis.EMULATION && !import.meta.env.PROD) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   connectDatabaseEmulator(database, "127.0.0.1", 9000);
 
